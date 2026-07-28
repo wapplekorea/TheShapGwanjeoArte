@@ -98,7 +98,7 @@
     .premium-text{font-size:13px;color:rgba(255,255,255,.65);line-height:1.8;word-break:keep-all;}
 
     /* OVERVIEW */
-    #overview{background:#eef1f7;} #overview .sec-title,#overview .divider+p,#units .sec-title,#calendar .sec-title{color:#0c1b30;} #overview .sec-badge,#units .sec-badge,#calendar .sec-badge{color:#8a6a2a;border-color:rgba(138,106,42,.4);}
+    #overview{background:#eef1f7;} #overview .sec-title,#overview .divider+p,#units .sec-title{color:#0c1b30;} #overview .sec-badge,#units .sec-badge{color:#8a6a2a;border-color:rgba(138,106,42,.4);}
     .overview-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:60px;}
     .overview-img{border-radius:4px;overflow:hidden;aspect-ratio:4/3;background:var(--panel);}
     .overview-img img{width:100%;height:100%;object-fit:cover;}
@@ -109,19 +109,19 @@
     .overview-table td{padding:16px 0;font-size:14px;color:#334;line-height:1.8;word-break:keep-all;}
 
     /* SPECS / UNIT */
-    #units{background:#ffffff;}
+    #units{background:#ffffff;padding:100px 0;}
     .units-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:48px 0 40px;}
-    .unit-tab{background:#f5f0e8;border:1px solid rgba(185,146,42,.3);color:#8a6020;border-radius:999px;padding:12px 28px;font-weight:800;font-size:14px;cursor:pointer;transition:all .2s;letter-spacing:.04em;}
+    .unit-tab{background:#f5f0e8;border:1px solid rgba(185,146,42,.3);color:#8a6020;border-radius:999px;padding:14px 32px;font-weight:800;font-size:15px;cursor:pointer;transition:all .2s;letter-spacing:.04em;}
     .unit-tab.active,.unit-tab:hover{background:var(--gold);color:var(--navy);border-color:var(--gold);}
     .unit-panel{display:none;}
-    .unit-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+    .unit-panel.active{display:grid;grid-template-columns:3fr 2fr;gap:60px;align-items:start;}
     .unit-img{background:#f8f9fc;border-radius:12px;overflow:hidden;border:1px solid #e4e8f0;}
     .unit-img img{width:100%;height:auto;object-fit:contain;display:block;}
-    .unit-size{font-size:clamp(48px,7vw,80px);font-weight:900;color:#b8922a;line-height:1;}
+    .unit-size{font-size:clamp(56px,7vw,96px);font-weight:900;color:#b8922a;line-height:1;}
     .unit-size span{font-size:.4em;font-weight:400;color:var(--gray);}
-    .unit-count{font-size:14px;color:#667;margin:8px 0 28px;}
-    .unit-features{list-style:none;display:flex;flex-direction:column;gap:14px;}
-    .unit-features li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:#334;}
+    .unit-count{font-size:15px;color:#667;margin:10px 0 32px;letter-spacing:.02em;}
+    .unit-features{list-style:none;display:flex;flex-direction:column;gap:16px;margin-top:8px;}
+    .unit-features li{display:flex;align-items:flex-start;gap:12px;font-size:15px;color:#334;line-height:1.7;}
     .unit-features li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:7px;}
 
     /* CONTACT */
@@ -165,7 +165,6 @@
       .hero-inner{padding:60px 24px 40px;}
       .hero-info-inner{padding:0 12px;grid-template-columns:repeat(2,1fr);}
       .hero-info-item{padding:18px 12px;}
-      .cal-grid{grid-template-columns:1fr 1fr;}
       .premium-grid{grid-template-columns:1fr;}
       .premium-card:first-child{grid-row:auto;aspect-ratio:16/9;}
       .overview-inner{grid-template-columns:1fr;gap:40px;}
@@ -185,7 +184,6 @@
     <span>관저아르떼</span>
   </div>
   <ul class="nav-links">
-    <li><a href="#calendar">청약일정</a></li>
     <li><a href="#premium">프리미엄</a></li>
     <li><a href="#overview">사업개요</a></li>
     <li><a href="#units">평형안내</a></li>
@@ -230,57 +228,6 @@
   </div>
 </section>
 
-<!-- CALENDAR -->
-<section id="calendar">
-  <div class="wrap">
-    <div class="sec-badge">SCHEDULE</div>
-    <h2 class="sec-title">청약 일정</h2>
-    <div class="divider"></div>
-    <p class="sec-desc" style="color:#556;">더샵 관저아르떼의 주요 청약 일정을 확인하세요. 놓치지 마시고 지금 바로 관심고객으로 등록하세요.</p>
-    <div class="cal-grid">
-      <div class="cal-item">
-        <div class="cal-num">01</div>
-        <div class="cal-event">입주자 모집공고</div>
-        <div class="cal-date">2026. 04. 24 (금)</div>
-      </div>
-      <div class="cal-item cal-highlight">
-        <div class="cal-num">02</div>
-        <div class="cal-event">GRAND OPEN</div>
-        <div class="cal-date">2026. 05. 01 (금)</div>
-      </div>
-      <div class="cal-item">
-        <div class="cal-num">03</div>
-        <div class="cal-event">특별공급</div>
-        <div class="cal-date">2026. 05. 06 (수)</div>
-      </div>
-      <div class="cal-item">
-        <div class="cal-num">04</div>
-        <div class="cal-event">1순위 청약</div>
-        <div class="cal-date">2026. 05. 07 (목)</div>
-      </div>
-      <div class="cal-item">
-        <div class="cal-num">05</div>
-        <div class="cal-event">2순위 청약</div>
-        <div class="cal-date">2026. 05. 08 (금)</div>
-      </div>
-      <div class="cal-item">
-        <div class="cal-num">06</div>
-        <div class="cal-event">당첨자 발표</div>
-        <div class="cal-date">2026. 05. 14 (목)</div>
-      </div>
-      <div class="cal-item">
-        <div class="cal-num">07</div>
-        <div class="cal-event">당첨자 서류접수</div>
-        <div class="cal-date">2026. 05. 19 (화) ~ 05. 23 (토)</div>
-      </div>
-      <div class="cal-item">
-        <div class="cal-num">08</div>
-        <div class="cal-event">정당계약</div>
-        <div class="cal-date">2026. 05. 28 (목) ~ 05. 30 (토)</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- PREMIUM -->
 <section id="premium">
