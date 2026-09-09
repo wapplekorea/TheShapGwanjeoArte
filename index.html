@@ -534,35 +534,39 @@ function switchUnit(id, el) {
 
 // Form submit
 (function(){
-  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzXiCO-C1RmUXb96X-Cx8bluQzdhWhGZDrT5ECLGosPDD4_sX8irZmu4pZ3veovgEOa/exec';
-  document.querySelectorAll('.consult-form').forEach(function(form){
-    form.addEventListener('submit', function(e){
-      e.preventDefault();
-      var status = form.querySelector('.form-status');
-      var btn = form.querySelector('.form-submit');
-      btn.disabled = true;
-      btn.textContent = '전송 중...';
-      status.style.color = '#666';
-      status.textContent = '';
-      var fd = new FormData(form);
-      fd.append('project', form.dataset.project || '더샵 관저아르떼');
-      fd.append('timestamp', new Date().toLocaleString('ko-KR'));
-      fetch(ENDPOINT, {method:'POST', mode:'no-cors', body:fd})
-        .then(function(){
-          status.style.color = '#2e7d32';
-          status.textContent = '✓ 접수되었습니다. 빠른 시일 내 연락드리겠습니다.';
-          form.reset();
-          var el = document.getElementById('date-display');
-          if(el){el.textContent='날짜를 선택해주세요';el.style.color='#aaa';}
-          btn.textContent = '관심고객 등록';
-          btn.disabled = false;
-        })
-        .catch(function(){
-          status.style.color = '#c0392b';
-          status.textContent = '전송 중 오류가 발생했습니다. 전화로 문의해 주세요.';
-          btn.textContent = '관심고객 등록';
-          btn.disabled = false;
-        });
+  var ENDPOINT='https://script.google.com/macros/s/AKfycbzXiCO-C1RmUXb96X-Cx8bluQzdhWhGZDrT5ECLGosPDD4_sX8irZmu4pZ3veovgEOa/exec';
+  function parseAdSource(){
+    var qs=window.location.search;
+    if(!qs)return'직접 유입';
+    var p=new URLSearchParams(qs);
+    var napm=p.get('NaPm')||'';
+    if(napm){try{var d=decodeURIComponent(napm);var tr=d.match(/tr=([^|]+)/);if(tr){if(tr[1]==='sa')return'네이버 검색광고(SA)';if(tr[1]==='gfa')return'네이버 GFA(디스플레이)';return'네이버 광고('+tr[1]+')';}}catch(e){}return'네이버 광고';}
+    if(p.get('n_media')||p.get('n_query'))return'네이버 파워링크';
+    var us=p.get('utm_source')||'';if(us)return us+(p.get('utm_medium')?'/'+p.get('utm_medium'):'');
+    return'기타';
+  }
+  var _ip='';
+  fetch('https://api.ipify.org?format=json').then(function(r){return r.json();}).then(function(d){_ip=d.ip||'';}).catch(function(){});
+  var adSource=parseAdSource();
+  document.addEventListener('DOMContentLoaded',function(){
+    document.querySelectorAll('.consult-form').forEach(function(form){
+      var hp=document.createElement('input');hp.type='text';hp.name='_hp';hp.setAttribute('tabindex','-1');hp.setAttribute('autocomplete','off');hp.style.cssText='position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;';form.appendChild(hp);
+      var statusEl=form.querySelector('.form-status');var btn=form.querySelector('button[type="submit"]');
+      form.addEventListener('submit',function(e){
+        e.preventDefault();
+        var hpVal=form.querySelector('input[name="_hp"]');if(hpVal&&hpVal.value.trim()){if(statusEl)statusEl.textContent='상담신청이 접수되었습니다. 담당자가 순차 연락드립니다.';form.reset();return;}
+        var fd=new URLSearchParams();new FormData(form).forEach(function(v,k){if(k!=='_hp')fd.append(k,v);});
+        fd.append('project',form.dataset.project||document.title);
+        fd.append('page',window.location.href);
+        fd.append('userAgent',navigator.userAgent);
+        fd.append('ip',_ip);
+        fd.append('adSource',adSource);
+        if(btn)btn.disabled=true;if(statusEl)statusEl.textContent='접수 중입니다...';
+        fetch(ENDPOINT,{method:'POST',mode:'no-cors',body:fd})
+          .then(function(){form.reset();try{if(window.wcs){if(!wcs_add)var wcs_add={};wcs_add['wa']='';var _conv={};_conv.type='lead';wcs.trans(_conv);}}catch(e){}if(statusEl)statusEl.textContent='상담신청이 접수되었습니다. 담당자가 순차 연락드립니다.';  })
+          .catch(function(){if(statusEl)statusEl.textContent='접수 중 오류가 발생했습니다. 전화로 문의 부탁드립니다.';})
+          .finally(function(){if(btn)btn.disabled=false;});
+      });
     });
   });
 })();
